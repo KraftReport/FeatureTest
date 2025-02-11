@@ -8,13 +8,26 @@ namespace SmsPohApi
 {
     public class Program
     {
-        /*static void Main(string[] args)
+        static void Main(string[] args)
         {
-            var apiUri = "https://v3.smspoh.com/api/rest/send";
-
             var apiKey = "JATv4QuGdTkE4Wqx";
 
             var apiSecret = "RLyJi9a_Df74Il_N";
+
+            SendMessage(apiKey, apiSecret);
+
+            CheckBalance(apiKey, apiSecret);
+
+            CheckHistory(apiKey, apiSecret);
+        }
+
+        public static void SendMessage(string key,string secret)
+        {
+            var apiUri = "https://v3.smspoh.com/api/rest/send";
+
+            var apiKey = key;
+
+            var apiSecret = secret;
 
             var byteData = System.Text.Encoding.UTF8.GetBytes($"{apiKey}:{apiSecret}");
 
@@ -44,14 +57,80 @@ namespace SmsPohApi
                     Console.WriteLine(responseText);
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-            } 
-        }*/
+            }
 
-        static void Main(string[] args)
+            }
+
+        public static void CheckBalance(string key,string secret)
+        {
+            var apiUri = "https://v3.smspoh.com/api/rest/account/get-balance";
+
+            var apiKey = key;
+
+            var apiSecret = secret;
+
+            var byteData = System.Text.Encoding.UTF8.GetBytes($"{apiKey}:{apiSecret}");
+
+            var base64Token = Convert.ToBase64String(byteData);
+             
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {base64Token}");
+
+                    var response = httpClient.GetAsync(apiUri).Result;
+
+                    var responseText = response.Content.ReadAsStringAsync().Result;
+
+                    Console.WriteLine(responseText);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        public static void CheckHistory(string key,string secret)
+        {
+            var apiUri = "https://v3.smspoh.com/api/rest/messages";
+
+            var apiKey = key;
+
+            var apiSecret = secret;
+
+            var byteData = System.Text.Encoding.UTF8.GetBytes($"{apiKey}:{apiSecret}");
+
+            var base64Token = Convert.ToBase64String(byteData);
+
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {base64Token}");
+
+                    var response = httpClient.GetAsync(apiUri).Result;
+
+                    var responseText = response.Content.ReadAsStringAsync().Result;
+
+                    Console.WriteLine(responseText);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+        }
+
+        public static void TestWithEncrypt(string[] args)
         {
             var apiUri = "https://v3.smspoh.com/api/rest/send";
 
@@ -69,37 +148,37 @@ namespace SmsPohApi
 
             Console.WriteLine(DecryptMessage(encryptedData.Item3, encryptedData.Item2, "password"));
 
-            //var payload = new
-            //{
-            //    from = "TABLE",
-            //    to = "09971147172",
-            //    message = encryptedData.Item2,
-            //    encrypt = 1,
-            //    encryptKey = encryptedData.Item1,
-            //};
+            var payload = new
+            {
+                from = "TABLE",
+                to = "09971147172",
+                message = encryptedData.Item2,
+                encrypt = 1,
+                encryptKey = encryptedData.Item1,
+            };
 
-            //var jsonPayload = JsonSerializer.Serialize(payload);
+            var jsonPayload = JsonSerializer.Serialize(payload);
 
-            //var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            //using (var httpClient = new HttpClient())
-            //{
-            //    try
-            //    {
-            //        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {base64Token}");
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {base64Token}");
 
-            //        var response = httpClient.PostAsync(apiUri, content).Result;
+                    var response = httpClient.PostAsync(apiUri, content).Result;
 
-            //        var responseText = response.Content.ReadAsStringAsync().Result;
+                    var responseText = response.Content.ReadAsStringAsync().Result;
 
-            //        Console.WriteLine(responseText);
+                    Console.WriteLine(responseText);
 
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine(ex.Message);
-            //    }
-            //}
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
 
         }
 
@@ -138,7 +217,6 @@ namespace SmsPohApi
             }
         }
  
-
         public static string DecryptMessage(byte[] salt, byte[] encryptedMessage, string password)
         {
             using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000))
