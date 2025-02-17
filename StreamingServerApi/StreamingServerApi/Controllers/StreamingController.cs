@@ -9,6 +9,14 @@ namespace StreamingServerApi.Controllers
     [ApiController]
     public class StreamingController : ControllerBase
     {
+/*
+        [HttpGet]
+        [Route("create-short-song-stream-files")]
+        public IActionResult CreateShortSongStreamFiles()
+        {
+            var outputBaseFilePath = "C:\\Users\\kraft\\Documents\\General\\streaming\\shortsong\\stream\\";
+        }
+*/
         [HttpGet]
         [Route("getStreamFile/{otp}")]
         public IActionResult GetStreamFile(string otp)
@@ -22,7 +30,7 @@ namespace StreamingServerApi.Controllers
                 var newKeyFileLocation = "https://localhost:44325/api/streaming/getKey/keyotp";
                 var updatedFileContent = Regex.Replace(fileContent, pattern, $"$1{newKeyFileLocation}$3");
                 var newFileBytes = Encoding.UTF8.GetBytes(updatedFileContent);
-                return File(newFileBytes, "application/x-mpegURL", "index.m3u8");
+                return File(newFileBytes, "application/vnd.apple.mpegurl", "index.m3u8");
             }
             return NotFound();
         }
