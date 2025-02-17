@@ -4,3 +4,7 @@ SmsPohApi/SmsPohApi/obj/SmsPohApi.csproj.nuget.g.props
 /SmsPohApi/SmsPohApi/bin
 /SmsPohApi/.vs/SmsPohApi/CopilotIndices
 /SmsPohApi/.vs
+/StreamingServerApi/.vs
+StreamingServerApi/StreamingServerApi.sln
+/StreamingServerApi/StreamingServerApi/bin
+/StreamingServerApi/StreamingServerApi/obj
