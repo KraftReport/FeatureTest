@@ -14,7 +14,7 @@ namespace SmsPohApi
 
             var apiSecret = "RLyJi9a_Df74Il_N";
 
-            SendMessage(apiKey, apiSecret);
+            //SendMessage(apiKey, apiSecret);
 
             CheckBalance(apiKey, apiSecret);
 
