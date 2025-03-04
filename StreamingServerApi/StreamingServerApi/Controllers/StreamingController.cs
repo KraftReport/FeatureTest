@@ -135,16 +135,33 @@ namespace StreamingServerApi.Controllers
         [Route("editTs")]
         public IActionResult EditTs()
         {
-            var filePath = "C:\\Users\\kraft\\Documents\\General\\streaming\\shortsong\\stream\\BDPCC001\\1706\\index.m3u8";
+            var filePath = "C:\\Users\\kraft\\Documents\\General\\streaming\\shortsong\\stream\\HLWAN - 001\\1028\\index.m3u8";
             var content = System.IO.File.ReadAllText(filePath);
             
-            var updatedContent = Regex.Replace(content, @"(?<=\n)(output\d+\.ts)", "https://localhost:9090/$1");
+            var updatedContent = Regex.Replace(content, @"(#EXT-X-KEY:METHOD=AES-128,URI="")(.*?)("")", $"$1https://localhost:44325/api/streaming/getKey/keyotp$3");
 
-            var secondUpdatedContent = Regex.Replace(updatedContent, @"(#EXT-X-KEY:METHOD=AES-128,URI="")(.*?)("")", $"$1https://localhost:44325/api/streaming/getKey/keyotp$3");
+            var secondUpdatedContent = Regex.Replace(updatedContent, @"(?<=\n)(output\d+\.ts)", "https://localhost:9090/$1");
             
             System.IO.File.WriteAllText(filePath, secondUpdatedContent);
             return Ok();
 
+        }
+
+        [HttpGet]
+        [Route("regex-parse")]
+        public IActionResult RegexParse()
+        {
+            var value = "234-987";
+            var pattern = @"^(?<songId>\d+)-(?<albumId>\d+)$";
+            var match = Regex.Match(value, pattern);
+            var songId = match.Groups["songId"].Value;
+            var albumId = match.Groups["albumId"].Value;
+            var dto = new
+            {
+                song = songId,
+                album = albumId
+            };
+            return Ok(dto);
         }
     }
 }

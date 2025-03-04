@@ -5,9 +5,29 @@ namespace StreamingServerApi.Controllers
 {
     public class Service
     {
-/*        public List<ExcelModel> ReadExcelAndMapModel(string filePath)
+        public int Add(int number)
         {
+            return number + number;
+        }
 
-        }*/
+        public int Multiply(int number)
+        {
+            return number * number;
+        }
+
+        public int Subtract(int number)
+        {
+            return number - number;
+        }
+
+        public int Divide(int number)
+        {
+            return number / number;
+        }
+
+        public int Modulus(int number)
+        {
+            return number % number;
+        }
     }
 }
