@@ -14,7 +14,7 @@ namespace SmsPohApi
 
             var apiSecret = "RLyJi9a_Df74Il_N";
 
-            //SendMessage(apiKey, apiSecret);
+            SendMessage(apiKey, apiSecret);
 
             CheckBalance(apiKey, apiSecret);
 
@@ -36,7 +36,10 @@ namespace SmsPohApi
             var payload = new
             {
                 from = "TABLE",
-                to = "09971147172",
+                to = "09753426431", //telenor
+                //to = "09971147172", //ooredoo
+                //to = "09429765624", //mpt
+                //to = "09693245260", //mytel
                 message = "see entire picture effortlessly"
             };
 
