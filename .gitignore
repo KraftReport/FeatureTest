@@ -28,3 +28,9 @@ StreamingServerApi/StreamingServerApi/StreamingServerApi.csproj.user
 /webassembly/.vs
 /webassembly/bin
 /webassembly/obj
+/wordToExcel/.vs
+/wordToExcel/bin
+/wordToExcel/obj
+/ReadWordFile/obj
+/ReadWordFile/.vs
+/ReadWordFile/bin
